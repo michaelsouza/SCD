@@ -476,6 +476,7 @@ df_unico = df.drop_duplicates()
 
 ### Tipos de Correlação
 - $R^2$ (coeficiente de determinação)
+[Material CC0218 Correlação](https://docs.google.com/presentation/d/1maI_UlPjDBHtq57pMSJjToociymic2pJ/edit?usp=sharing&ouid=112763014768929227816&rtpof=true&sd=true)
 - Pearson (relações lineares)
 
 ---
