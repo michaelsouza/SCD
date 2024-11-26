@@ -48,13 +48,32 @@ style: |
 <div style="position: absolute; top: 10%; left: 53%; width: 45%; height: 80%; z-index: -1; background-image: url('images/ciclo_de_vida.webp'); background-size: cover; background-position: center;"></div>
 
 ---
+
+### Exemplo de Ciclo de Utilização de Dados
+
+1. **Objetivo**: Identificar padrões em geometrias de proteínas obtidas por RMN.  
+2. **Coleta**: Baixamos todas as proteínas do PDB geradas por RMN.
+3. **Higienização**: Fragmentos ausentes foram ajustados criando subsequências contínuas.  
+4. **Processamento**: Transformamos geometrias em árvores binárias.  
+
+![bg right:30% width:300px](images/pdb-vision.png)
+
+---
+
+5. **Normalização**: Ajustamos a orientação do quarto átomo para evitar reflexões.  
+6. **Análise**: Medimos o desvio em relação a uma distribuição uniforme.  
+7. **Visualização**: Criamos histogramas das sequências binárias.  
+8. **Aplicação**: Propusemos um novo método de classificação de proteínas.  
+
+![bg left:30% width:400px](images/1mpd_model-1.jpeg)
+
+---
 ## Ferramentas Python para Análise de Dados
 
-- **NumPy**: Computação numérica
-- **Pandas**: Manipulação de dados tabulares e séries temporais
-- **Matplotlib**: Visualizações básicas
-- **Seaborn**: Visualizações estatísticas
-- **Plotly**: Visualizações interativas
+- **Computação numérica**: NumPy
+- **Tabelas e Séries**: Pandas
+- **Visualizações Estáticas**: Matplotlib, Seaborn
+- **Visualizações Interativas**: Plotly
 
 <div style="position: absolute; top: 35%; left: 75%; width: 20%; height: 35%; z-index: -1; background-image: url('images/tools-icon.png'); background-size: cover; background-position: center;"></div>
 
@@ -107,6 +126,36 @@ print(array_2d.size)      # Número total de elementos
 - Tipagem estática
 - Memória contígua
 - Alta performance computacional
+
+---
+## Broadcasting
+
+```python
+# Operação com escalar
+array = np.array([1, 2, 3])
+resultado = array + 10  # [11, 12, 13]
+
+# Operação com arrays de formas diferentes
+a = np.array([[1], [2], [3]])
+b = np.array([1, 2, 3])
+resultado = a + b
+
+```
+
+---
+## Broadcasting em Ação
+
+```python
+# Matriz de Distâncias
+points = np.random.rand(num_points, 2) # Pontos no plano
+
+# Compute the distance matrix using broadcasting
+diff = points[:, np.newaxis, :] - points[np.newaxis, :, :]
+dist_matrix = np.sqrt(np.sum(diff**2, axis=-1))
+```
+
+### Exercício: 
+Compare a peformance do broadcasting com loops tradicionais.
 
 ---
 ## Operações Matemáticas
@@ -198,42 +247,11 @@ aleatorio = np.random.rand(3)
 ```
 
 ---
-## Broadcasting
-
-```python
-# Operação com escalar
-array = np.array([1, 2, 3])
-resultado = array + 10  # [11, 12, 13]
-
-# Operação com arrays de formas diferentes
-a = np.array([[1], [2], [3]])
-b = np.array([1, 2, 3])
-resultado = a + b
-
-```
-
----
-## Broadcasting em Ação
-
-```python
-# Matriz de Distâncias
-points = np.random.rand(num_points, 2) # Pontos no plano
-
-# Compute the distance matrix using broadcasting
-diff = points[:, np.newaxis, :] - points[np.newaxis, :, :]
-dist_matrix = np.sqrt(np.sum(diff**2, axis=-1))
-```
-
-### Exercício: 
-Compare a peformance do broadcasting com loops tradicionais.
-
----
 ## Integração com Outras Bibliotecas
 
 ### NumPy como Base Computacional
 - Pandas: Conversão de estruturas
 - Matplotlib: Fonte de dados para visualização
-- Scikit-learn: Preparação de dados para Machine Learning
 
 ```python
 import pandas as pd
@@ -252,11 +270,69 @@ plt.show()
 ## Boas Práticas
 
 - Usar vetorização ao invés de loops
-- Aproveitar funções universais (vetorizadas)
 - Escolher tipos de dados apropriados
 - Evitar cópias desnecessárias de arrays
 
 ![bg right:40% width:300px](images/good-practices-icon.png)
+
+---
+
+### Gargalo de Memória
+
+<div style="border: 0px solid #ccc; border-radius: 10px; padding: 10px; margin: 10px; display: flex; justify-content: space-between; gap: 20px;">  
+  <div style="width: 48%; border: 1px solid #ccc; padding: 10px; border-radius: 10px;">
+
+#### CPU Specifications
+
+- **Processor:** Intel i9-14900KS
+- **Cores:** 24
+- **Clock Speed (Turbo):** 6.2 GHz
+- **Instructions per Cycle:** 2
+- **Data/Instruction:** 8 bytes
+- **CPU Data Rate:** 2380.8 GB/s
+
+</div>
+<div style="width: 48%; border: 1px solid #ccc; padding: 10px; border-radius: 10px;">
+
+#### Memory Specifications
+
+- **Memory Type:** DDR5-5600
+- **2x Bandwidth:** 89.6 GB/s
+
+#### <span style="color: red;">Bottleneck</span>
+
+- **CPU Demand:** 2380.8 GB/s
+- **Memory Bandwidth:** 89.6 GB/s
+- **Bottleneck Ratio:** <span style="color: red;">**26.6x**</span>
+
+</div>
+</div>
+
+<footer>
+https://www.techpowerup.com/cpu-specs/core-i9-14900ks.c3522
+<br>
+https://www.crucial.com/articles/about-memory/everything-about-ddr5-ram
+</footer>
+
+---
+
+### Gargalo de Memória
+
+```python
+import numpy as np
+
+# Define the size of the array
+array_size = 10_000_000
+
+# Create arrays with different data types
+int32_array = np.random.randint(0, 100, size=array_size, dtype=np.int32)
+int64_array = np.random.randint(0, 100, size=array_size, dtype=np.int64)
+float32_array = np.random.rand(array_size).astype(np.float32)
+float64_array = np.random.rand(array_size).astype(np.float64)
+```
+
+#### Exercício: 
+Compare o tempo de execução para operações com diferentes tipos de dados.
 
 ---
 
