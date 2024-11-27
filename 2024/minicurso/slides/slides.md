@@ -32,7 +32,7 @@ https://github.com/michaelsouza/SCD/tree/main/2024/minicurso
 - Manipulação de Dados (NumPy e Pandas)
 - Limpeza e Preparação de Dados
 - Análise Exploratória de Dados (EDA)
-- Visualização de Dados (Matplotlib, Seaborn e Plotly)
+- Visualização de Dados (Plotly)
 
 ![bg right:30% width:250px](images/agenda-icon.jpg)
 
@@ -575,6 +575,99 @@ plt.show()
 # Perguntas?
 
 ---
+<!-- backgroundColor: white -->
+
+![bg center:80% width:500px](images/plotly-logo.png)
+
+---
+
+## Plotly
+- Biblioteca de visualização de código aberto.
+- Gráficos estáticos, **animados** e **interativos**.
+- **Portabilidade** para outras linguagens.
+
+![bg right:30% width:300px](images/plotly-banner.png)
+  
+---
+### Instalação
+
+```python
+!pip install plotly           # Instalação
+import plotly.express as px   # Importação
+import pandas as pd           # Importação
+
+# Leitura de Dados
+df = pd.read_excel('dados.csv')
+```
+
+## 1. Gráfico de Barras
+
+- **Uso**: Comparar valores entre diferentes categorias.
+
+```python
+# Gráfico de Barras
+fig = px.bar(df, x='Categoria', y='Valores', title='Gráfico de Barras')
+fig.show()
+```
+
+---
+
+## 2. Histograma
+
+- **Uso**: Mostrar a distribuição de uma variável numérica.
+
+```python
+# Dados para o histograma
+df_hist = pd.DataFrame({'Dados': np.random.randn(500)})
+
+# Histograma
+fig = px.histogram(df_hist, x='Dados', nbins=20, title='Histograma')
+fig.show()
+```
+
+---
+
+## 3. Boxplot
+
+- **Uso**: Resumir a distribuição de dados e identificar outliers.
+
+```python
+# Boxplot por Grupo
+fig = px.box(df_extra, x='Grupo', y='Salário', title='Boxplot de Salários por Grupo')
+fig.show()
+```
+
+---
+
+## 4. Gráfico de Dispersão (Scatter Plot)
+
+- **Uso**: Visualizar a relação entre duas variáveis numéricas.
+
+```python
+# Gráfico de Dispersão
+fig = px.scatter(df_extra, x='Idade', y='Salário', color='Grupo', title='Idade vs. Salário')
+fig.show()
+```
+
+---
+
+## 5. Gráfico de Linha
+
+- **Uso**: Representar dados sequenciais ou séries temporais.
+
+```python
+# Gráfico de Linha
+fig = px.line(df_extra, x='Data', y='Valor_Temporal', title='Tendência ao Longo do Tempo')
+fig.show()
+```
+
+---
+
+<!-- backgroundColor: orange -->
+
+# Perguntas?
+
+---
 
 <!-- backgroundColor: white -->
 
@@ -586,12 +679,12 @@ plt.show()
 ---
 ## Análise Exploratória de Dados (EDA)
 
-### Estatísticas Descritivas
+### Estatísticas Descritivas (Medidas)
 
 <div style="border: 0px solid #ccc; border-radius: 10px; padding: 10px; margin: 10px; display: flex; justify-content: space-between; gap: 20px;">  
   <div style="width: 48%; border: 1px solid #ccc; padding: 10px; border-radius: 10px;">
 
-#### Medidas de tendência central
+#### Centralidade
 - Média
 - Mediana
 - Moda
@@ -599,63 +692,25 @@ plt.show()
   </div>
   <div style="width: 48%; border: 1px solid #ccc; padding: 10px; border-radius: 10px;">
 
-#### Medidas de dispersão
+#### Dispersão
 - Desvio padrão
 - Variância
 
   </div>
+  <div style="width: 48%; border: 1px solid #ccc; padding: 10px; border-radius: 10px;">
+
+#### Correlação
+- Determinação
+- Pearson
+
+  </div>
 </div>
 
----
-## Correlação de Dados
+<footer style="font-size: 28px;">
 
-### Tipos de Correlação
-- $R^2$ (coeficiente de determinação)
-[Material CC0218 Correlação](https://docs.google.com/presentation/d/1maI_UlPjDBHtq57pMSJjToociymic2pJ/edit?usp=sharing&ouid=112763014768929227816&rtpof=true&sd=true)
-- Pearson (relações lineares)
+👉 [CC0218 Coeficiente de Correlação (link)](https://docs.google.com/presentation/d/1maI_UlPjDBHtq57pMSJjToociymic2pJ/edit?usp=sharing&ouid=112763014768929227816&rtpof=true&sd=true)
 
----
-## Visualização de Dados
-
-### Bibliotecas
-- Matplotlib: Visualizações básicas
-- Seaborn: Visualizações estatísticas
-- Plotly: Visualizações interativas
-
-```python
-import plotly.express as px
-
-# Gráfico interativo
-fig = px.scatter(df, x='Idade', y='Salário')
-fig.show()
-```
-
----
-## Visualizações Avançadas com Plotly
-
-- Gráficos 3D
-- Dashboards interativos
-- Mapas de calor
-- Gráficos de superfície
-
-```python
-import plotly.graph_objs as go
-
-fig_3d = go.Figure(data=[
-    go.Scatter3d(
-        x=df['Idade'], 
-        y=df['Salário'], 
-        z=df['Outro_Dado'],
-        mode='markers'
-    )
-])
-```
-
----
-
-<!-- backgroundColor: orange -->
-
-# Dúvidas?
+</footer>
 
 ---
 
