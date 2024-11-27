@@ -20,6 +20,10 @@ style: |
 
 ![bg right:30% width:300px](images/colorido-vertical-ufc.png)
 
+<footer style="font-size: 28px;">
+<image src="images/github-icon.png" width="30px" style="vertical-align: middle;">
+https://github.com/michaelsouza/SCD/tree/main/2024/minicurso
+</footer>
 
 ---
 ## Agenda do Minicurso
@@ -29,6 +33,8 @@ style: |
 - Limpeza e Preparação de Dados
 - Análise Exploratória de Dados (EDA)
 - Visualização de Dados (Matplotlib, Seaborn e Plotly)
+
+![bg right:30% width:250px](images/agenda-icon.jpg)
 
 ---
 
@@ -45,7 +51,7 @@ style: |
   - Pesquisa científica
   - Tomada de decisões
 
-<div style="position: absolute; top: 10%; left: 53%; width: 45%; height: 80%; z-index: -1; background-image: url('images/ciclo_de_vida.webp'); background-size: cover; background-position: center;"></div>
+<div style="position: absolute; top: 10%; left: 53%; width: 45%; height: 80%; z-index: -1; background-image: url('images/ciclo_de_vida.png'); background-size: cover; background-position: center;"></div>
 
 ---
 
@@ -87,10 +93,12 @@ style: |
 - Biblioteca fundamental para computação científica
 - Suporte para arrays multidimensionais
 - Funções matemáticas de alto desempenho
-- Base para outras bibliotecas científicas
+- Base para outras bibliotecas de análise de dados
   - Pandas
   - Matplotlib
   - Scikit-learn
+
+![bg right:30% height:250px](images/numpy-banner.png)
 
 ---
 ## Criação de Arrays NumPy
@@ -178,7 +186,7 @@ print(np.max(a))     # Máximo
 ```
 
 ---
-## Indexação e Fatiamento
+## Indexação e Fatiamento (*Slice*)
 
 ```python
 # Indexação simples
@@ -190,6 +198,7 @@ print(array_2d[1, 2])  # Elemento na 2ª linha, 3ª coluna
 # Fatiamento
 print(array_2d[0:2, 1:3])  # Subarray
 print(array_2d[:, 1])      # Coluna específica
+print(array_2d[2, :])      # Linha específica
 
 # Indexação booleana
 print(array_2d[array_2d > 5])
@@ -347,50 +356,50 @@ Compare o tempo de execução para operações com diferentes tipos de dados.
 
 ---
 
-## Manipulação de Dados com Pandas
+## O que é o Pandas?
 
-### Estruturas Principais
-- **Series**: Vetor unidimensional
-- **DataFrame**: Tabela de dados bidimensional
+- **Pandas** é uma biblioteca de código aberto para a linguagem Python.
+- Fornece estruturas de dados de alto desempenho e ferramentas de análise de dados.
+- Baseado no NumPy, oferece estruturas como **Series** e **DataFrame** para manipulação eficiente de dados.
+
+![bg right:35% width:450px](images/pandas-banner2.png)
+
+---
+
+## Principais Funcionalidades do Pandas
+
+- Manipulação e análise de dados tabulares e estruturados.
+- Leitura e escrita de dados em vários formatos (CSV, Excel, SQL, etc.).
+- Limpeza e preparação de dados.
+- Seleção, filtragem e agregação de dados.
+- Manipulação de séries temporais.
+
+![bg right:35% width:100%%](images/pandas-banner.png)
+
+---
+
+## Estruturas de Dados Principais
+
+### Series
+
+- Vetor unidimensional rotulado, capaz de armazenar qualquer tipo de dado.
+- Similar a um array do NumPy, mas com rótulos de índice.
 
 ```python
 import pandas as pd
-
-# Criando um DataFrame
-df = pd.DataFrame({
-    'Nome': ['Ana', 'Carlos', 'Maria'],
-    'Idade': [25, 30, 22],
-    'Salário': [5000, 6000, 4500]
-})
-```
-
----
-## Operações Básicas com Pandas
-
-- Carregamento de dados
-- Seleção e filtragem
-- Agregação
-- Grupamento
-
-```python
-# Exemplo de filtragem
-jovens = df[df['Idade'] < 30]
-
-# Exemplo de agregação
-media_salario = df['Salário'].mean()
-```
----
-### Series: Vetor Unidimensional
-
-```python
-import pandas as pd
-import numpy as np
 
 # Criando uma Series a partir de uma lista
 numeros = pd.Series([10, 20, 30, 40, 50])
 print(numeros)
+```
 
-# Series Temporais com Datas
+---
+
+## Trabalhando com Séries Temporais
+
+- Manipulação eficiente de dados baseados em tempo.
+- Funções para resampling, time shifting e windowing.
+
 ```python
 import pandas as pd
 import numpy as np
@@ -404,111 +413,161 @@ print(serie_temporal)
 
 ---
 
-### Características das Series
-- Similar a um array NumPy com rótulos de índice
-- Pode conter diferentes tipos de dados
-- Operações vetoriais
-- Indexação flexível
+### DataFrame
 
----
-## DataFrame: Tabela de Dados
+- Estrutura de dados bidimensional com rótulos nas linhas e colunas.
+- Equivalente a uma planilha ou tabela SQL.
 
 ```python
-# 1. A partir de um dicionário
-df_funcionarios = pd.DataFrame({
+import pandas as pd
+
+# Criando um DataFrame a partir de um dicionário
+dados = {
     'Nome': ['Ana', 'Carlos', 'Maria'],
     'Idade': [25, 30, 22],
-    'Salário': [5000, 6000, 4500],
-    'Departamento': ['RH', 'TI', 'Vendas']
-})
+    'Salário': [5000, 6000, 4500]
+}
 
-# 2. A partir de um NumPy array
-dados_matriz = np.random.randint(0, 100, size=(4, 3))
-df_random = pd.DataFrame(
-    dados_matriz, 
-    columns=['Valor1', 'Valor2', 'Valor3']
-)
+df = pd.DataFrame(dados)
+print(df)
+```
 
-# 3. Leitura de fontes externas
+---
+
+## Carregando Dados de Fontes Externas
+
+- **CSV**: Arquivos de valores separados por vírgulas.
+- **Excel**: Planilhas do Microsoft Excel.
+- **SQL**: Bancos de dados relacionais.
+
+```python
+import pandas as pd
+
+# Leitura de um arquivo CSV
 df_csv = pd.read_csv('dados.csv')
+
+# Leitura de um arquivo Excel
 df_excel = pd.read_excel('planilha.xlsx')
 ```
 
 ---
-## Operações Básicas com DataFrames
+
+## Seleção e Filtragem de Dados
+
+- **Seleção de colunas**: Acessar uma ou mais colunas por nome.
+- **Filtragem de linhas**: Selecionar linhas que atendem a certas condições.
 
 ```python
-# Informações sobre o DataFrame
-print(df_funcionarios.info())
-print(df_funcionarios.describe())
+# Selecionando uma coluna
+nomes = df['Nome']
+print(nomes)
 
-# Seleção de Dados
-# Seleção de coluna
-print(df_funcionarios['Nome'])
+# Selecionando múltiplas colunas
+nome_salario = df[['Nome', 'Salário']]
+print(nome_salario)
 
-# Seleção de linhas
-print(df_funcionarios.loc[0])  # Primeira linha
-print(df_funcionarios.iloc[0:2])  # Primeiras duas linhas
-
-# Filtragem condicional
-jovens = df_funcionarios[df_funcionarios['Idade'] < 28]
-ti_dept = df_funcionarios[df_funcionarios['Departamento'] == 'TI']
+# Filtrando linhas com base em uma condição
+jovens = df[df['Idade'] < 28]
+print(jovens)
 ```
 
 ---
-## Manipulação Avançada
+
+## Operações de Agregação
+
+- **Estatísticas descritivas**: mean, sum, count, min, max, etc.
+- **Agrupamento de dados**: groupby para agrupar e agregar dados.
 
 ```python
-# Agregações
-print(df_funcionarios.groupby('Departamento')['Salário'].mean())
+# Calculando a média dos salários
+media_salario = df['Salário'].mean()
+print(f"Média salarial: {media_salario}")
 
-# Ordenação
-df_ordenado = df_funcionarios.sort_values('Idade', ascending=False)
-
-# Adição de novas colunas
-df_funcionarios['Bonus'] = df_funcionarios['Salário'] * 0.1
-
-# Tratamento de valores ausentes
-df_limpo = df_funcionarios.dropna()
-df_preenchido = df_funcionarios.fillna(0)
+# Agrupando por departamento e calculando a média salarial
+df['Departamento'] = ['RH', 'TI', 'Vendas']
+media_por_departamento = df.groupby('Departamento')['Salário'].mean()
+print(media_por_departamento)
 ```
 
 ---
-## Conversão entre Estruturas
+
+## Manipulação de Dados
+
+- **Adição de colunas**: Criar novas colunas baseadas em cálculos ou condições.
+- **Ordenação**: Organizar os dados com base em uma ou mais colunas.
+- **Tratamento de valores ausentes**: dropna, fillna.
+
+```python
+# Adicionando uma nova coluna de bônus
+df['Bônus'] = df['Salário'] * 0.1
+
+# Ordenando o DataFrame por idade decrescente
+df_ordenado = df.sort_values('Idade', ascending=False)
+print(df_ordenado)
+
+# Tratando valores ausentes
+df_limpo = df.dropna()       # Remove linhas com valores ausentes
+df_preenchido = df.fillna(0) # Substitui valores ausentes por 0
+```
+---
+
+## Conversão entre Estruturas de Dados
+
+- **Series para DataFrame**
+- **DataFrame para NumPy array**
+- **DataFrame para dicionário**
 
 ```python
 # Series para DataFrame
 serie = pd.Series([1, 2, 3], name='Números')
 df_from_series = serie.to_frame()
+print(df_from_series)
 
 # DataFrame para NumPy array
-array_numerico = df_funcionarios.to_numpy()
+array_numerico = df.to_numpy()
+print(array_numerico)
 
-# Dicionário a partir do DataFrame
-dict_funcionarios = df_funcionarios.to_dict()
+# DataFrame para dicionário
+dict_dados = df.to_dict()
+print(dict_dados)
 ```
 
-### Observações Importantes
-- Flexibilidade na manipulação de dados
-- Integração com NumPy
-- Múltiplas formas de criação e transformação
-
 ---
+
 ## Limpeza e Preparação de Dados
 
-### Técnicas Essenciais
-- Tratamento de valores ausentes
-- Remoção de duplicatas
-- Conversão de tipos
-- Normalização
+- **Tratamento de valores ausentes**
+- **Remoção de duplicatas**
+- **Conversão de tipos de dados**
+- **Normalização e padronização**
 
 ```python
 # Removendo valores ausentes
-df_limpo = df.dropna()
+df_sem_na = df.dropna()
 
-# Tratando duplicatas
+# Removendo duplicatas
 df_unico = df.drop_duplicates()
+
+# Convertendo tipos de dados
+df['Idade'] = df['Idade'].astype(float)
 ```
+
+---
+
+## Integração com Outras Bibliotecas
+
+- **NumPy**: Operações numéricas de baixo nível.
+- **Matplotlib** e **Seaborn**: Visualização de dados.
+- **Scikit-learn**: Aprendizado de máquina.
+
+```python
+import matplotlib.pyplot as plt
+
+# Gráfico de barras do salário por nome
+df.plot.bar(x='Nome', y='Salário')
+plt.show()
+```
+
 ---
 
 <!-- backgroundColor: orange -->
